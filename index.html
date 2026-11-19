@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kiwi Pathways Immigration – Contact us (QA embed test)</title>
+<style>
+  :root { --brand:#1f3a5f; --accent:#e07a2e; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family: Georgia, "Times New Roman", serif; color:#222; background:#faf7f2; line-height:1.6; }
+  header { background:var(--brand); color:#fff; padding:16px 24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; position:sticky; top:0; z-index:10; }
+  header .logo { font-weight:bold; font-size:20px; }
+  nav a { color:#fff; margin-left:16px; text-decoration:none; font-size:15px; }
+  .hero { padding:48px 24px; text-align:center; background:linear-gradient(135deg,#1f3a5f,#3b6ea5); color:#fff; }
+  .hero h1 { margin:0 0 8px; font-size:34px; }
+  main { max-width:1100px; margin:0 auto; padding:32px 16px; display:grid; grid-template-columns: 1fr 2fr; gap:32px; }
+  aside { background:#fff; border:1px solid #e5ded3; border-radius:8px; padding:20px; }
+  aside h3 { margin-top:0; color:var(--brand); }
+  .form-wrap { background:#fff; border:1px solid #e5ded3; border-radius:8px; padding:20px; }
+  .form-wrap h2 { margin-top:0; color:var(--brand); }
+  .btn { display:inline-block; background:var(--accent); color:#fff; padding:10px 18px; border-radius:4px; text-decoration:none; }
+  .long { max-width:1100px; margin:0 auto; padding:0 16px 48px; }
+  footer { background:#222; color:#bbb; text-align:center; padding:24px; font-size:14px; }
+  #qa-log { font: 12px/1.4 monospace; background:#111; color:#9f9; padding:8px; max-height:140px; overflow:auto; margin-top:12px; border-radius:4px; }
+  @media (max-width: 760px) { main { grid-template-columns: 1fr; } .hero h1 { font-size:26px; } nav a { margin-left:10px; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Kiwi Pathways Immigration</div>
+  <nav><a href="#">Home</a><a href="#">Visas</a><a href="#">About</a><a href="#contact">Contact</a></nav>
+</header>
+
+<section class="hero">
+  <h1>Start your New Zealand visa journey</h1>
+  <p>Fictional test site used only to check the AdviserAide lead form embed.</p>
+  <a class="btn" href="#contact">Send an enquiry</a>
+</section>
+
+<main id="contact">
+  <aside>
+    <h3>Why choose us</h3>
+    <ul>
+      <li>Licensed advisers</li>
+      <li>Work, partner and student visas</li>
+      <li>Replies within one working day</li>
+    </ul>
+    <p>Phone: 09 000 0000<br>Email: hello@example.com</p>
+    <div id="qa-log">QA log: waiting for embed…</div>
+  </aside>
+
+  <div class="form-wrap">
+    <h2>Visa enquiry</h2>
+    <p>Fill in the form below and we will be in touch.</p>
+
+    <!-- AdviserAide embed code, copied from Lead form > Share > Embed -->
+    <script src="https://tst1-forms.adviseraide.net/embed.js" data-form="UUDy8eSB7jqW" async></script>
+
+    <p id="after-embed" style="color:#777;font-size:14px;margin-top:16px">Text after the embed (should stay below the form).</p>
+  </div>
+</main>
+
+<section class="long">
+  <h2>Frequently asked questions</h2>
+  <p>This section exists so the page scrolls, to check how the frame behaves inside a longer page, and that the page itself does not change or reload when the form is submitted.</p>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus. Vestibulum id ligula porta felis euismod semper. Cras mattis consectetur purus sit amet fermentum.</p>
+  <p>Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Maecenas faucibus mollis interdum. Etiam porta sem malesuada magna mollis euismod.</p>
+</section>
+
+<footer>© Kiwi Pathways Immigration (fictional) – QA test page</footer>
+
+<script>
+  // QA helper only: logs what the embed does, so testers can see it on the page (useful on phones without dev tools).
+  (function () {
+    var log = document.getElementById('qa-log');
+    var start = Date.now();
+    function add(msg) { log.textContent += '\n' + ((Date.now() - start) / 1000).toFixed(1) + 's ' + msg; log.scrollTop = log.scrollHeight; }
+    add('page loaded on ' + location.host + ' (width ' + window.innerWidth + 'px)');
+    var seen = false;
+    setInterval(function () {
+      var f = document.querySelector('iframe');
+      if (f && !seen) { seen = true; add('iframe added: ' + f.src); }
+      if (f) { var h = f.offsetHeight; if (h !== f._lastH) { f._lastH = h; add('iframe height ' + h + 'px'); } }
+    }, 500);
+    window.addEventListener('message', function (e) {
+      if (String(e.origin).indexOf('adviseraide') > -1) add('message from form: ' + JSON.stringify(e.data).slice(0, 120));
+    });
+    window.addEventListener('beforeunload', function () { add('page is unloading (should NOT happen on submit)'); });
+  })();
+</script>
+</body>
+</html>
